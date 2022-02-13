@@ -1,22 +1,21 @@
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
-import React from 'react'
 import { useQueryClient } from 'react-query'
 import { Layout } from '../components/Layout'
-import { RocketItem } from '../components/RocketItem'
-import { Rocket } from '../types/types'
+import { TranslatedTweetItem } from '../components/TranslatedTweetItem'
+import { TranslatedTweet } from '../types/types'
 
 const ReadCache = () => {
   const queryClient = useQueryClient()
-  const data = queryClient.getQueryData<Rocket[]>('rockets')
+  const data = queryClient.getQueryData<TranslatedTweet[]>('tweets')
   return (
     <Layout title="read cache">
       <p className="my-5 text-blue-500 text-xl font-bold">
         Read out cache data
       </p>
       <ul>
-        {data?.map((rocket) => (
-          <RocketItem key={rocket.id} rocket={rocket} />
+        {data?.map((tweet) => (
+          <TranslatedTweetItem key={tweet.tweet_id} translatedTweet={tweet} />
         ))}
       </ul>
       <Link href="/" passHref>

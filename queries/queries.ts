@@ -1,20 +1,11 @@
-import { gql } from "graphql-request"
+import { gql } from 'graphql-request'
 
-export const GET_ROCKETS = gql`
-  query GetRockets {
-  rockets {
-    id
-    name
-    mass {
-      kg
-    }
-    height {
-      meters
-    }
-    diameter {
-      meters
+export const GET_TRANSLATED_TWEET = gql`
+  query GetTranslatedTweets {
+    latestTweets {
+      translated_text
+      origin_text
+      tweet_id
     }
   }
-}
-
 `

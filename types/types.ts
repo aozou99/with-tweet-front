@@ -1,13 +1,5 @@
-export interface Rocket {
-  id: string
-  name: string
-  mass: {
-    kg: number
-  }
-  height: {
-    meters: number
-  }
-  diameter: {
-    meters: number
-  }
+export interface TranslatedTweet {
+  tweet_id: string
+  origin_text: string
+  translated_text: string
 }
