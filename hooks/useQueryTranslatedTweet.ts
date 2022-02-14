@@ -2,9 +2,11 @@ import { request } from 'graphql-request'
 import { useQuery } from 'react-query'
 import { TranslatedTweet } from '../types/types'
 import { GET_TRANSLATED_TWEET } from '../queries/queries'
-
 interface TranslatedTweetsRes {
   latestTweets: TranslatedTweet[]
+}
+interface userQueryProps {
+  initailData: TranslatedTweet[]
 }
 
 export const fetchTranslatedTweet = async () => {
@@ -15,11 +17,12 @@ export const fetchTranslatedTweet = async () => {
   return latestTweets
 }
 
-export const useQueryTranslatedTweet = () => {
+export const useQueryTranslatedTweet = ({ initailData }: userQueryProps) => {
   return useQuery<TranslatedTweet[], Error>({
     queryKey: 'tweets',
     queryFn: fetchTranslatedTweet,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
+    initialData: initailData,
   })
 }

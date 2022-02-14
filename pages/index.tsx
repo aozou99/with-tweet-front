@@ -1,10 +1,20 @@
 import Link from 'next/link'
 import { Layout } from '../components/Layout'
 import { ChevronDoubleRightIcon } from '@heroicons/react/solid'
-import { useQueryTranslatedTweet } from '../hooks/useQueryTranslatedTweet'
+import {
+  fetchTranslatedTweet,
+  useQueryTranslatedTweet,
+} from '../hooks/useQueryTranslatedTweet'
 import { TranslatedTweetItem } from '../components/TranslatedTweetItem'
-export default function Home() {
-  const { status, data } = useQueryTranslatedTweet()
+import { TranslatedTweet } from '../types/types'
+import { VFC } from 'react'
+
+interface Props {
+  tweets: TranslatedTweet[]
+}
+
+const Home: VFC<Props> = ({ tweets }) => {
+  const { status, data } = useQueryTranslatedTweet({ initailData: tweets })
   if (status === 'loading') return <Layout title="home">{'Loading...'}</Layout>
   if (status === 'error') return <Layout title="home">{'Error'}</Layout>
   return (
@@ -22,4 +32,13 @@ export default function Home() {
       </Link>
     </Layout>
   )
+}
+
+export default Home
+
+export async function getStaticProps() {
+  const tweets = await fetchTranslatedTweet()
+  return {
+    props: { tweets },
+  }
 }
