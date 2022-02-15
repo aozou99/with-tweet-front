@@ -1,35 +1,24 @@
-import Link from 'next/link'
 import { Layout } from '../components/Layout'
-import { ChevronDoubleRightIcon } from '@heroicons/react/solid'
-import {
-  fetchTranslatedTweet,
-  useQueryTranslatedTweet,
-} from '../hooks/useQueryTranslatedTweet'
-import { TranslatedTweetItem } from '../components/TranslatedTweetItem'
+import { fetchTranslatedTweet } from '../hooks/useQueryTranslatedTweet'
 import { TranslatedTweet } from '../types/types'
 import { VFC } from 'react'
+import getTweets from '../static-tweet/lib/get-tweets'
+import Tweet from '../static-tweet/components/post/tweet'
+import { Tweets } from '../static-tweet/lib/tweets'
 
 interface Props {
   tweets: TranslatedTweet[]
+  ids: string[]
 }
 
-const Home: VFC<Props> = ({ tweets }) => {
-  const { status, data } = useQueryTranslatedTweet({ initailData: tweets })
-  if (status === 'loading') return <Layout title="home">{'Loading...'}</Layout>
-  if (status === 'error') return <Layout title="home">{'Error'}</Layout>
+const Home: VFC<Props> = ({ tweets, ids }) => {
   return (
     <Layout title="home">
-      <p className="my-5 text-blue-500 text-xl font-bold">Fetching useQuery</p>
-      <ul>
-        {data?.map((tweet) => (
-          <TranslatedTweetItem key={tweet.tweet_id} translatedTweet={tweet} />
+      <Tweets.Provider value={tweets}>
+        {ids.map((id) => (
+          <Tweet key={id} id={id} caption={''} />
         ))}
-      </ul>
-      <Link href="/read-cache" passHref>
-        <div className="mt-20 flex items-center cursor-pointer">
-          <ChevronDoubleRightIcon className="h-5 w-5 mx-1 text-blue-500" />
-        </div>
-      </Link>
+      </Tweets.Provider>
     </Layout>
   )
 }
@@ -37,8 +26,10 @@ const Home: VFC<Props> = ({ tweets }) => {
 export default Home
 
 export async function getStaticProps() {
-  const tweets = await fetchTranslatedTweet()
+  const translatedTweets = await fetchTranslatedTweet()
+  const ids = translatedTweets.map<string>((x) => x.tweet_id)
+  const tweets = await getTweets(ids)
   return {
-    props: { tweets },
+    props: { tweets, ids },
   }
 }
