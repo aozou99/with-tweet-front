@@ -1,13 +1,24 @@
 export default function TweetHeader({ tweet }) {
-  const url = `https://twitter.com/${tweet.username}`;
-  const avatar = tweet.avatar.normal;
+  const url = `https://twitter.com/${tweet.username}`
+  const tweetUrl = `${url}/status/${tweet.id}`
+  const avatar = tweet.avatar.normal
 
   return (
     <div className="header">
-      <a href={url} className="avatar" target="_blank" rel="noopener noreferrer">
+      <a
+        href={url}
+        className="avatar"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src={avatar} alt={tweet.name} decoding="async" loading="lazy" />
       </a>
-      <a href={url} className="author" target="_blank" rel="noopener noreferrer">
+      <a
+        href={url}
+        className="author"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <span className="name" title={tweet.name}>
           {tweet.name}
         </span>
@@ -15,7 +26,12 @@ export default function TweetHeader({ tweet }) {
           @{tweet.username}
         </span>
       </a>
-      <a href={url} className="brand" target="_blank" rel="noopener noreferrer">
+      <a
+        href={tweetUrl}
+        className="brand"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <div className="icon icon-twitter" title="View on Twitter" role="img" />
       </a>
 
@@ -65,5 +81,5 @@ export default function TweetHeader({ tweet }) {
         }
       `}</style>
     </div>
-  );
+  )
 }

@@ -18,9 +18,8 @@ export default function Tweet({ id, caption }) {
       {caption != null ? <p>{caption}</p> : null}
       <style jsx>{`
         aside {
-          max-width: 560px;
-          min-width: 220px;
-          margin: 2rem auto;
+          width: 360px;
+          margin: 0.5rem auto;
         }
         p {
           font-size: 0.875rem;
@@ -29,11 +28,6 @@ export default function Tweet({ id, caption }) {
           margin: 0;
           margin-top: 10px;
           padding: 0;
-        }
-        @media (max-width: 500px) {
-          aside {
-            max-width: 300px;
-          }
         }
         /* for IE11 Hack */
         @media (-ms-high-contrast: none), (-ms-high-contrast: active) {
