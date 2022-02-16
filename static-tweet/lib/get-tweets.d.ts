@@ -20,4 +20,4 @@ interface Tweets {
   [id: string]: Tweet[]
 }
 
-export default async function getTweets(ids: string[]): Tweets
+export default async function getTweets(ids: string[]): Promise<Tweets>
