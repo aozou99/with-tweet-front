@@ -16,7 +16,7 @@ const Home: VFC<Props> = ({ tweets, ids }) => {
     <Layout title="home">
       <Tweets.Provider value={tweets}>
         {ids.map((id) => (
-          <Tweet key={id} id={id} caption={''} />
+          <Tweet key={id} id={id} />
         ))}
       </Tweets.Provider>
     </Layout>
