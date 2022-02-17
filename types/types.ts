@@ -3,3 +3,7 @@ export interface TranslatedTweet {
   origin_text: string
   translated_text: string
 }
+
+export interface PracticeTweet extends TranslatedTweet {
+  choices: string[]
+}

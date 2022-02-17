@@ -1,10 +1,11 @@
 import { Layout } from '../components/Layout'
-import { fetchTranslatedTweet } from '../hooks/useQueryTranslatedTweet'
+import { fetchTranslatedTweetIds } from '../hooks/useQueryTranslatedTweet'
 import { TranslatedTweet } from '../types/types'
 import { VFC } from 'react'
 import getTweets from '../static-tweet/lib/get-tweets'
 import Tweet from '../static-tweet/components/post/tweet'
 import { Tweets } from '../static-tweet/lib/tweets'
+import Link from 'next/link'
 
 interface Props {
   tweets: TranslatedTweet[]
@@ -16,7 +17,14 @@ const Home: VFC<Props> = ({ tweets, ids }) => {
     <Layout title="home">
       <Tweets.Provider value={tweets}>
         {ids.map((id) => (
-          <Tweet key={id} id={id} />
+          <Link
+            key={`link-${id}`}
+            href={`/translate/${id}`}
+            as="/xxx/xxx"
+            passHref
+          >
+            <Tweet key={id} id={id} />
+          </Link>
         ))}
       </Tweets.Provider>
     </Layout>
@@ -26,8 +34,7 @@ const Home: VFC<Props> = ({ tweets, ids }) => {
 export default Home
 
 export async function getStaticProps() {
-  const translatedTweets = await fetchTranslatedTweet()
-  const ids = translatedTweets.map<string>((x) => x.tweet_id)
+  const ids = await fetchTranslatedTweetIds()
   const tweets = await getTweets(ids)
   return {
     props: { tweets, ids },
