@@ -3,9 +3,8 @@ import Node from '../html/node'
 import components from '../twitter-layout/components'
 import twitterTheme from '../twitter-layout/twitter.module.css'
 import darkTheme from '../dark-layout/dark.module.css'
-import { forwardRef } from 'react'
 
-export default forwardRef(({ id, caption }, ref) => {
+export default ({ id, caption }) => {
   const tweet = useTweet(id)
   // If you want to use the dark mode, set the value to "true".
   const isDark = false
@@ -14,7 +13,7 @@ export default forwardRef(({ id, caption }, ref) => {
   if (tweet.ignore) return null
 
   return (
-    <aside className={isDark ? darkTheme.theme : twitterTheme.theme} ref={ref}>
+    <aside className={isDark ? darkTheme.theme : twitterTheme.theme}>
       <Node components={components} node={tweet.ast[0]} />
       {caption != null ? <p>{caption}</p> : null}
       <style jsx>{`
@@ -41,4 +40,4 @@ export default forwardRef(({ id, caption }, ref) => {
       `}</style>
     </aside>
   )
-})
+}
